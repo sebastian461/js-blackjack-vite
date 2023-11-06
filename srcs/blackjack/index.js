@@ -1,5 +1,10 @@
 import _ from "underscore";
-import { crearDeck, pedirCarta, valorCarta } from "./casos-de-uso";
+import {
+  crearDeck,
+  pedirCarta,
+  valorCarta,
+  determinarGanador,
+} from "./casos-de-uso";
 
 (() => {
   /* 
@@ -46,21 +51,6 @@ import { crearDeck, pedirCarta, valorCarta } from "./casos-de-uso";
     cartaHTML[turno].append(imgCarta);
   };
 
-  const determinarGanador = (puntosPC) => {
-    setTimeout(() => {
-      const mensaje =
-        puntosJugadores[0] === puntosJugadores[puntosPC]
-          ? "Empate"
-          : puntosJugadores[0] > 21 ||
-            (puntosJugadores[0] < 21 &&
-              puntosJugadores[0] < puntosJugadores[puntosPC] &&
-              puntosJugadores[puntosPC] <= 21)
-          ? "Perdiste"
-          : "Ganaste";
-      alert(mensaje);
-    }, 100);
-  };
-
   //turno PC
   const turnoPC = (puntosMinimos) => {
     btnPedir.disabled = true;
@@ -73,7 +63,7 @@ import { crearDeck, pedirCarta, valorCarta } from "./casos-de-uso";
       if (puntosJugadores[puntosPC] === 21) break;
     } while (puntosMinimos >= puntosJugadores[puntosPC]);
 
-    determinarGanador(puntosPC);
+    determinarGanador(puntosPC, puntosJugadores);
   };
 
   //Eventos
