@@ -1,5 +1,6 @@
 import _ from "underscore";
 import { crearDeck } from "./casos-de-uso/crear-deck";
+import { pedirCarta } from "./casos-de-uso/pedir-carta";
 
 (() => {
   /* 
@@ -32,13 +33,6 @@ import { crearDeck } from "./casos-de-uso/crear-deck";
     btnPedir.disabled = false;
     puntosJugadores = [];
     for (let i = 0; i < numJugadores; i++) puntosJugadores.push(0);
-  };
-
-  //Pedir carta del deck
-  const pedirCarta = () => {
-    if (deck.length === 0) throw "No hay cartas en el deck";
-
-    return deck.pop();
   };
 
   //Obtiene el valor de la carta extraida
@@ -87,7 +81,7 @@ import { crearDeck } from "./casos-de-uso/crear-deck";
     btnDetener.disabled = true;
     const puntosPC = puntosJugadores.length - 1;
     do {
-      const carta = pedirCarta();
+      const carta = pedirCarta(deck);
       puntuacion(carta, puntosPC);
       dibujarCarta(carta, puntosPC);
       if (puntosJugadores[puntosPC] === 21) break;
@@ -98,7 +92,8 @@ import { crearDeck } from "./casos-de-uso/crear-deck";
 
   //Eventos
   btnPedir.addEventListener("click", () => {
-    const carta = pedirCarta();
+    const carta = pedirCarta(deck);
+    console.log(deck);
     puntuacion(carta, 0);
     dibujarCarta(carta, 0);
 
