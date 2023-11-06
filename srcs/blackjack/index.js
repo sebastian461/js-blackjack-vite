@@ -1,6 +1,7 @@
 import _ from "underscore";
 import { crearDeck } from "./casos-de-uso/crear-deck";
 import { pedirCarta } from "./casos-de-uso/pedir-carta";
+import { valorCarta } from "./casos-de-uso/valor-carta";
 
 (() => {
   /* 
@@ -33,19 +34,6 @@ import { pedirCarta } from "./casos-de-uso/pedir-carta";
     btnPedir.disabled = false;
     puntosJugadores = [];
     for (let i = 0; i < numJugadores; i++) puntosJugadores.push(0);
-  };
-
-  //Obtiene el valor de la carta extraida
-  const valorCarta = (carta, puntos) => {
-    const valor = carta.substring(0, carta.length - 1);
-
-    return (puntos += !isNaN(valor)
-      ? valor * 1
-      : valor === "A"
-      ? puntos + 11 > 21
-        ? 1
-        : 11
-      : 10);
   };
 
   const puntuacion = (carta, turno) => {
@@ -93,7 +81,6 @@ import { pedirCarta } from "./casos-de-uso/pedir-carta";
   //Eventos
   btnPedir.addEventListener("click", () => {
     const carta = pedirCarta(deck);
-    console.log(deck);
     puntuacion(carta, 0);
     dibujarCarta(carta, 0);
 
