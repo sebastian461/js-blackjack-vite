@@ -1,7 +1,5 @@
 import _ from "underscore";
-import { crearDeck } from "./casos-de-uso/crear-deck";
-import { pedirCarta } from "./casos-de-uso/pedir-carta";
-import { valorCarta } from "./casos-de-uso/valor-carta";
+import { crearDeck, pedirCarta, valorCarta } from "./casos-de-uso";
 
 (() => {
   /* 
