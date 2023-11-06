@@ -4,6 +4,7 @@ import {
   determinarGanador,
   pedirCarta,
   puntuacion,
+  dibujarCarta,
 } from "./casos-de-uso";
 
 (() => {
@@ -39,13 +40,6 @@ import {
     for (let i = 0; i < numJugadores; i++) puntosJugadores.push(0);
   };
 
-  const dibujarCarta = (carta, turno) => {
-    const imgCarta = document.createElement("img");
-    imgCarta.classList.add("carta");
-    imgCarta.src = `assets/cartas/${carta}.png`;
-    cartaHTML[turno].append(imgCarta);
-  };
-
   //turno PC
   const turnoPC = (puntosMinimos) => {
     btnPedir.disabled = true;
@@ -54,7 +48,7 @@ import {
     do {
       const carta = pedirCarta(deck);
       puntuacion(carta, puntosPC, puntosJugadores, puntosHTML);
-      dibujarCarta(carta, puntosPC);
+      dibujarCarta(carta, puntosPC, cartaHTML);
       if (puntosJugadores[puntosPC] === 21) break;
     } while (puntosMinimos >= puntosJugadores[puntosPC]);
 
@@ -65,7 +59,7 @@ import {
   btnPedir.addEventListener("click", () => {
     const carta = pedirCarta(deck);
     puntuacion(carta, 0, puntosJugadores, puntosHTML);
-    dibujarCarta(carta, 0);
+    dibujarCarta(carta, 0, cartaHTML);
 
     if (puntosJugadores[0] > 21) {
       turnoPC(0);
