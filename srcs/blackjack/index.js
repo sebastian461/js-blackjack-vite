@@ -1,9 +1,9 @@
 import _ from "underscore";
 import {
   crearDeck,
-  pedirCarta,
-  valorCarta,
   determinarGanador,
+  pedirCarta,
+  puntuacion,
 } from "./casos-de-uso";
 
 (() => {
@@ -39,11 +39,6 @@ import {
     for (let i = 0; i < numJugadores; i++) puntosJugadores.push(0);
   };
 
-  const puntuacion = (carta, turno) => {
-    puntosJugadores[turno] = valorCarta(carta, puntosJugadores[turno]);
-    puntosHTML[turno].innerText = puntosJugadores[turno];
-  };
-
   const dibujarCarta = (carta, turno) => {
     const imgCarta = document.createElement("img");
     imgCarta.classList.add("carta");
@@ -58,7 +53,7 @@ import {
     const puntosPC = puntosJugadores.length - 1;
     do {
       const carta = pedirCarta(deck);
-      puntuacion(carta, puntosPC);
+      puntuacion(carta, puntosPC, puntosJugadores, puntosHTML);
       dibujarCarta(carta, puntosPC);
       if (puntosJugadores[puntosPC] === 21) break;
     } while (puntosMinimos >= puntosJugadores[puntosPC]);
@@ -69,7 +64,7 @@ import {
   //Eventos
   btnPedir.addEventListener("click", () => {
     const carta = pedirCarta(deck);
-    puntuacion(carta, 0);
+    puntuacion(carta, 0, puntosJugadores, puntosHTML);
     dibujarCarta(carta, 0);
 
     if (puntosJugadores[0] > 21) {
