@@ -1,10 +1,10 @@
 import _ from "underscore";
 import {
   crearDeck,
-  determinarGanador,
+  dibujarCarta,
   pedirCarta,
   puntuacion,
-  dibujarCarta,
+  turnoPC,
 } from "./casos-de-uso";
 
 (() => {
@@ -40,21 +40,6 @@ import {
     for (let i = 0; i < numJugadores; i++) puntosJugadores.push(0);
   };
 
-  //turno PC
-  const turnoPC = (puntosMinimos) => {
-    btnPedir.disabled = true;
-    btnDetener.disabled = true;
-    const puntosPC = puntosJugadores.length - 1;
-    do {
-      const carta = pedirCarta(deck);
-      puntuacion(carta, puntosPC, puntosJugadores, puntosHTML);
-      dibujarCarta(carta, puntosPC, cartaHTML);
-      if (puntosJugadores[puntosPC] === 21) break;
-    } while (puntosMinimos >= puntosJugadores[puntosPC]);
-
-    determinarGanador(puntosPC, puntosJugadores);
-  };
-
   //Eventos
   btnPedir.addEventListener("click", () => {
     const carta = pedirCarta(deck);
@@ -62,14 +47,14 @@ import {
     dibujarCarta(carta, 0, cartaHTML);
 
     if (puntosJugadores[0] > 21) {
-      turnoPC(0);
+      turnoPC(0, puntosJugadores, deck, puntosHTML, cartaHTML);
     } else if (puntosJugadores[0] === 21) {
-      turnoPC(puntosJugadores[0]);
+      turnoPC(puntosJugadores[0], puntosJugadores, deck, puntosHTML, cartaHTML);
     }
   }); //Una función que pasa por argumento de otra otra función es un Callback
 
   btnDetener.addEventListener("click", () => {
-    turnoPC(puntosJugadores[0]);
+    turnoPC(puntosJugadores[0], puntosJugadores, deck, puntosHTML, cartaHTML);
   });
 
   btnNuevo.addEventListener("click", () => {
